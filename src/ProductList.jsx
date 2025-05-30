@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './ProductList.css'
 import CartItem from './CartItem';
 import { addItem } from './CartSlice.jsx';
+
+// Compute total quantity in cart
+const totalQuantity = CartItem.reduce((sum, item) => sum + item.quantity, 0);
+
 
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
@@ -236,10 +241,16 @@ function ProductList({ onHomeClick }) {
         textDecoration: 'none',
     }
 
+
     const handleHomeClick = (e) => {
         e.preventDefault();
         onHomeClick();
     };
+
+    const dispatch = useDispatch();
+
+// This selects all cart items from the store
+    const cartItems = useSelector((state) => state.cart.items);
 
     const handleCartClick = (e) => {
         e.preventDefault();
@@ -257,7 +268,7 @@ function ProductList({ onHomeClick }) {
     };
 
     const handleAddToCart = (product) => {
-        dispatchEvent(addItem(product));
+        dispatch(addItem(product));
         setAddedToCart((prevState) => ({
             ...prevState, [product.name]: true,
         }));
@@ -303,7 +314,7 @@ function ProductList({ onHomeClick }) {
                         <div className="product-cost">{plant.cost}</div>
                         <button 
                             className="product-button"
-                            onClick={() => handleAddToCart(plant)}
+                            onClick={() => handleAddToCart({...product, quantity: 1 })}
                         >
                             Add to Cart
                         </button>
