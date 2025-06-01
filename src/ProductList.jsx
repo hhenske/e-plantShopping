@@ -245,8 +245,8 @@ function ProductList({ onHomeClick }) {
 
     const dispatch = useDispatch();
     // Compute total quantity in cart
-const totalQuantity = CartItem.reduce((sum, item) => sum + item.quantity, 0);
-
+    const totalQuantity = CartItem.reduce((sum, item) => sum + item.quantity, 0);
+    const [buttonStates, setButtonStates] = useState({});
 
 // This selects all cart items from the store
     const cartItems = useSelector((state) => state.cart.items);
