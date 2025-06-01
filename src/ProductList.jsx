@@ -4,10 +4,6 @@ import './ProductList.css'
 import CartItem from './CartItem';
 import { addItem } from './CartSlice.jsx';
 
-// Compute total quantity in cart
-const totalQuantity = CartItem.reduce((sum, item) => sum + item.quantity, 0);
-
-
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
@@ -248,6 +244,9 @@ function ProductList({ onHomeClick }) {
     };
 
     const dispatch = useDispatch();
+    // Compute total quantity in cart
+const totalQuantity = CartItem.reduce((sum, item) => sum + item.quantity, 0);
+
 
 // This selects all cart items from the store
     const cartItems = useSelector((state) => state.cart.items);
